@@ -1,0 +1,16 @@
+Legacy_WiFi_Check.drawio
+config/
+Dockerfile_Comp
+.idea/*
+preprocessor/*
+.DS_Store
+nohup.out
+metastore_db
+derby.log
+migration_confusion_matrix.py
+migration_docsis_confusion_matrix.py
+docsis_migration_evaluation.py
+migration_evaluation.py
+notebooks/*
+preprocessor-0.1-py3.7.egg
+aka_built/built_code/.idea/

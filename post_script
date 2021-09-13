@@ -1,0 +1,458 @@
+
+DROP table IF EXISTS business_users_test.tmp_single_modem_recommendation_temp;
+CREATE TABLE business_users_test.tmp_single_modem_recommendation_temp
+SELECT A.gateway_macaddress, 
+       A.intermittancy_perc,
+       A.scaled_accessibility_perc_full_day, 
+       A.ticket_count,
+       A.percent_outlier_far_between_0_to_20,
+       A.percent_outlier_far_between_20_to_40,
+       A.percent_outlier_far_between_40_to_60,
+       A.percent_outlier_far_between_60_to_80,
+       A.percent_outlier_far_between_80_to_100, 
+       A.percent_outlier_near_between_0_to_20,
+       A.percent_outlier_near_between_20_to_40,
+       A.percent_outlier_near_between_40_to_60,
+       A.percent_outlier_near_between_60_to_80,
+       A.percent_outlier_near_between_80_to_100, 
+       A.percent_80dbm_near_between_0_to_20,
+       A.percent_80dbm_near_between_20_to_40,
+       A.percent_80dbm_near_between_40_to_60,
+       A.percent_80dbm_near_between_60_to_80,
+       A.percent_80dbm_near_between_80_to_100,
+       A.percent_80dbm_far_between_0_to_20,
+       A.percent_80dbm_far_between_20_to_40,
+       A.percent_80dbm_far_between_40_to_60,
+       A.percent_80dbm_far_between_60_to_80,
+       A.percent_80dbm_far_between_80_to_100,
+       A.ticket_moving_average_between_0_to_20,
+       A.ticket_moving_average_between_20_to_40,
+       A.ticket_moving_average_between_40_to_60,
+       A.ticket_moving_average_between_60_to_80,
+       A.ticket_moving_average_between_80_to_100,
+       A.pods_recommendation,
+       B.polling_date
+FROM
+(SELECT gateway_macaddress,
+       intermittancy_perc,
+       scaled_accessibility_perc_full_day, 
+       ticket_count,
+       percent_outlier_far_between_0_to_20,
+       percent_outlier_far_between_20_to_40,
+       percent_outlier_far_between_40_to_60,
+       percent_outlier_far_between_60_to_80,
+       percent_outlier_far_between_80_to_100, 
+       percent_outlier_near_between_0_to_20,
+       percent_outlier_near_between_20_to_40,
+       percent_outlier_near_between_40_to_60,
+       percent_outlier_near_between_60_to_80,
+       percent_outlier_near_between_80_to_100, 
+       percent_80dbm_near_between_0_to_20,
+       percent_80dbm_near_between_20_to_40,
+       percent_80dbm_near_between_40_to_60,
+       percent_80dbm_near_between_60_to_80,
+       percent_80dbm_near_between_80_to_100,
+       percent_80dbm_far_between_0_to_20,
+       percent_80dbm_far_between_20_to_40,
+       percent_80dbm_far_between_40_to_60,
+       percent_80dbm_far_between_60_to_80,
+       percent_80dbm_far_between_80_to_100,
+       ticket_moving_average_between_0_to_20,
+       ticket_moving_average_between_20_to_40,
+       ticket_moving_average_between_40_to_60,
+       ticket_moving_average_between_60_to_80,
+       ticket_moving_average_between_80_to_100,
+       pods_recommendation FROM business_users_test.tmp_single_modem_prediction_classifier) AS A
+JOIN
+(SELECT gateway_macaddress, polling_date from business_users_test.tmp_single_modem_recommendation) AS B
+ON A.gateway_macaddress=B.gateway_macaddress
+
+
+DROP table IF EXISTS business_users_test.tmp_single_modem_recommendation_temp_scaled;
+CREATE TABLE IF NOT EXISTS business_users_test.tmp_single_modem_recommendation_temp_scaled
+SELECT A.gateway_macaddress, 
+       B.associated_device_macaddress,
+       B.interface,
+       B.unified_ssid,
+       B.signalstrength,
+       B.devicename,
+       B.hardwareversion,
+       B.missing_data,
+       B.missing_data_device,
+       B.device_score,
+       A.intermittancy_perc,
+       A.scaled_accessibility_perc_full_day, 
+       A.ticket_count,
+       A.percent_outlier_far_between_0_to_20,
+       A.percent_outlier_far_between_20_to_40,
+       A.percent_outlier_far_between_40_to_60,
+       A.percent_outlier_far_between_60_to_80,
+       A.percent_outlier_far_between_80_to_100, 
+       A.percent_outlier_near_between_0_to_20,
+       A.percent_outlier_near_between_20_to_40,
+       A.percent_outlier_near_between_40_to_60,
+       A.percent_outlier_near_between_60_to_80,
+       A.percent_outlier_near_between_80_to_100, 
+       A.percent_80dbm_near_between_0_to_20,
+       A.percent_80dbm_near_between_20_to_40,
+       A.percent_80dbm_near_between_40_to_60,
+       A.percent_80dbm_near_between_60_to_80,
+       A.percent_80dbm_near_between_80_to_100,
+       A.percent_80dbm_far_between_0_to_20,
+       A.percent_80dbm_far_between_20_to_40,
+       A.percent_80dbm_far_between_40_to_60,
+       A.percent_80dbm_far_between_60_to_80,
+       A.percent_80dbm_far_between_80_to_100,
+       A.ticket_moving_average_between_0_to_20,
+       A.ticket_moving_average_between_20_to_40,
+       A.ticket_moving_average_between_40_to_60,
+       A.ticket_moving_average_between_60_to_80,
+       A.ticket_moving_average_between_80_to_100,
+       A.pods_recommendation,
+       B.polling_date
+FROM
+(SELECT gateway_macaddress,
+       intermittancy_perc,
+       scaled_accessibility_perc_full_day, 
+       ticket_count,
+       percent_outlier_far_between_0_to_20,
+       percent_outlier_far_between_20_to_40,
+       percent_outlier_far_between_40_to_60,
+       percent_outlier_far_between_60_to_80,
+       percent_outlier_far_between_80_to_100, 
+       percent_outlier_near_between_0_to_20,
+       percent_outlier_near_between_20_to_40,
+       percent_outlier_near_between_40_to_60,
+       percent_outlier_near_between_60_to_80,
+       percent_outlier_near_between_80_to_100, 
+       percent_80dbm_near_between_0_to_20,
+       percent_80dbm_near_between_20_to_40,
+       percent_80dbm_near_between_40_to_60,
+       percent_80dbm_near_between_60_to_80,
+       percent_80dbm_near_between_80_to_100,
+       percent_80dbm_far_between_0_to_20,
+       percent_80dbm_far_between_20_to_40,
+       percent_80dbm_far_between_40_to_60,
+       percent_80dbm_far_between_60_to_80,
+       percent_80dbm_far_between_80_to_100,
+       ticket_moving_average_between_0_to_20,
+       ticket_moving_average_between_20_to_40,
+       ticket_moving_average_between_40_to_60,
+       ticket_moving_average_between_60_to_80,
+       ticket_moving_average_between_80_to_100,
+       pods_recommendation FROM business_users_test.tmp_single_modem_prediction_classifier) AS A
+JOIN
+(SELECT gateway_macaddress, 
+        associated_device_macaddress,
+        interface,
+        unified_ssid,
+        signalstrength,
+        devicename,
+        device_score,
+        hardwareversion,
+        missing_data,
+        missing_data_device,
+        polling_date 
+from business_users_test.tmp_single_modem_recommendation) AS B
+ON A.gateway_macaddress=B.gateway_macaddress
+
+
+DROP table IF EXISTS business_users_test.tmp_single_modem_recommendation_temp_scaled;
+CREATE TABLE IF NOT EXISTS business_users_test.tmp_single_modem_recommendation_temp_scaled
+SELECT A.gateway_macaddress, 
+       B.associated_device_macaddress,
+       B.interface,
+       B.unified_ssid,
+       B.signalstrength,
+       B.devicename,
+       B.hardwareversion,
+       B.missing_data,
+       B.missing_data_device,
+       B.device_score,
+       A.intermittancy_perc,
+       A.scaled_accessibility_perc_full_day, 
+       A.ticket_count,
+       A.percent_outlier_far_between_0_to_20,
+       A.percent_outlier_far_between_20_to_40,
+       A.percent_outlier_far_between_40_to_60,
+       A.percent_outlier_far_between_60_to_80,
+       A.percent_outlier_far_between_80_to_100, 
+       A.percent_outlier_near_between_0_to_20,
+       A.percent_outlier_near_between_20_to_40,
+       A.percent_outlier_near_between_40_to_60,
+       A.percent_outlier_near_between_60_to_80,
+       A.percent_outlier_near_between_80_to_100, 
+       A.percent_80dbm_near_between_0_to_20,
+       A.percent_80dbm_near_between_20_to_40,
+       A.percent_80dbm_near_between_40_to_60,
+       A.percent_80dbm_near_between_60_to_80,
+       A.percent_80dbm_near_between_80_to_100,
+       A.percent_80dbm_far_between_0_to_20,
+       A.percent_80dbm_far_between_20_to_40,
+       A.percent_80dbm_far_between_40_to_60,
+       A.percent_80dbm_far_between_60_to_80,
+       A.percent_80dbm_far_between_80_to_100,
+       A.ticket_moving_average_between_0_to_20,
+       A.ticket_moving_average_between_20_to_40,
+       A.ticket_moving_average_between_40_to_60,
+       A.ticket_moving_average_between_60_to_80,
+       A.ticket_moving_average_between_80_to_100,
+       A.pods_recommendation,
+       B.polling_date
+FROM
+(SELECT gateway_macaddress,
+       intermittancy_perc,
+       scaled_accessibility_perc_full_day, 
+       ticket_count,
+       percent_outlier_far_between_0_to_20,
+       percent_outlier_far_between_20_to_40,
+       percent_outlier_far_between_40_to_60,
+       percent_outlier_far_between_60_to_80,
+       percent_outlier_far_between_80_to_100, 
+       percent_outlier_near_between_0_to_20,
+       percent_outlier_near_between_20_to_40,
+       percent_outlier_near_between_40_to_60,
+       percent_outlier_near_between_60_to_80,
+       percent_outlier_near_between_80_to_100, 
+       percent_80dbm_near_between_0_to_20,
+       percent_80dbm_near_between_20_to_40,
+       percent_80dbm_near_between_40_to_60,
+       percent_80dbm_near_between_60_to_80,
+       percent_80dbm_near_between_80_to_100,
+       percent_80dbm_far_between_0_to_20,
+       percent_80dbm_far_between_20_to_40,
+       percent_80dbm_far_between_40_to_60,
+       percent_80dbm_far_between_60_to_80,
+       percent_80dbm_far_between_80_to_100,
+       ticket_moving_average_between_0_to_20,
+       ticket_moving_average_between_20_to_40,
+       ticket_moving_average_between_40_to_60,
+       ticket_moving_average_between_60_to_80,
+       ticket_moving_average_between_80_to_100,
+       pods_recommendation FROM business_users_test.tmp_single_modem_prediction_classifier) AS A
+JOIN
+(SELECT gateway_macaddress, 
+        associated_device_macaddress,
+        interface,
+        unified_ssid,
+        signalstrength,
+        devicename,
+        device_score,
+        hardwareversion,
+        missing_data,
+        missing_data_device,
+        polling_date 
+from business_users_test.tmp_single_modem_recommendation) AS B
+ON A.gateway_macaddress=B.gateway_macaddress
+
+spark.sql("INSERT INTO TABLE business_users_test.tmp_single_modems_historical_predictions SELECT * FROM business_users_test.tmp_single_modem_recommendation_temp")
+spark.sql("INSERT INTO TABLE business_users_test.tmp_single_modems_historical_predictions_scaled SELECT * FROM business_users_test.tmp_single_modem_recommendation_temp_scaled")
+
+
+INSERT INTO TABLE business_users_test.legacy_wifi_check_v1_pods_recommendation
+select A.gateway_macaddress,
+       A.polling_date,
+       A.pods_recommendation
+from
+(select count(gateway_macaddress) as distinct_gws, gateway_macaddress, polling_date, 
+       case when pods_recommendation='0' then "Yes" else "No" End as pods_recommendation 
+       from business_users_test.tmp_single_modem_recommendation_temp
+       group by gateway_macaddress,polling_date, pods_recommendation) AS A;
+
+
+INSERT INTO TABLE business_users_test.legacy_wifi_check_v1_pods_reco_with_intermittancy_score
+select A.gateway_macaddress,
+       A.polling_date,
+       A.pods_recommendation,
+       round(A.intermittancy_perc,2) as intermittancy_perc
+from
+(select count(gateway_macaddress) as distinct_gws, gateway_macaddress, polling_date, ticket_count,
+       case when pods_recommendation='0' then "Yes" else "No" End as pods_recommendation,
+       case when ((float(intermittancy_perc)>0.6) and (float(ticket_count) > 0)) then float(intermittancy_perc)
+            when ((float(intermittancy_perc)>0.5) and (float(ticket_count) > 0) and (pods_recommendation='1')) then float(1 - float(intermittancy_perc))
+            when ((float(intermittancy_perc)<0.5) and (float(ticket_count) > 0) and (pods_recommendation='0')) then float(1 - float(intermittancy_perc)) 
+            when ((pods_recommendation='0') and (float(intermittancy_perc)<0.5)) then float(1 - float(intermittancy_perc)) 
+            when ((float(ticket_count) <= 0) and (float(intermittancy_perc) > 0.5)) then float(1 - float(intermittancy_perc))
+            when ((float(ticket_count) <= 0) and (float(intermittancy_perc) > 0.5) and (pods_recommendation='1')) then float(1 - float(intermittancy_perc))
+            else intermittancy_perc End as intermittancy_perc
+       from business_users_test.tmp_single_modem_recommendation_temp
+       group by gateway_macaddress,polling_date, pods_recommendation, intermittancy_perc, ticket_count) AS A
+
+INSERT INTO TABLE business_users_test.legacy_wifi_check_v1_pods_reco_with_intermittancy_score_and_description
+select AA.gateway_macaddress, 
+       collect_set(CONCAT(CONCAT("(", CONCAT_WS(", ", CONCAT("mac:",AA.associated_device_macaddress), 
+                                                      CONCAT("devicename:",AA.devicename),
+                                                      CONCAT("score:",AA.device_score),
+                                                      CONCAT("interface:",AA.interface),
+                                                      CONCAT("lastrssi:",AA.signalstrength),
+                                                      CONCAT("missingpollGW:",AA.missing_data),
+                                                      CONCAT("missingpolldevice:",AA.missing_data_device))), ")")) as description, 
+                                                    
+       AA.pods_recommendation,
+       AA.intermittancy_perc,
+       AA.polling_date
+from
+(select A.gateway_macaddress,
+       A.associated_device_macaddress,
+       case when (pods_recommendation='Yes') then abs((A.intermittancy_perc * 100) - A.device_score) else A.device_score End as device_score,
+       A.pods_recommendation,
+       A.interface,
+       A.unified_ssid,
+       A.signalstrength,
+       A.devicename,
+       A.hardwareversion,
+       A.missing_data,
+       A.missing_data_device,
+       A.polling_date,
+       round(A.intermittancy_perc,2) as intermittancy_perc
+from
+(select 
+       gateway_macaddress, 
+       associated_device_macaddress,
+       case when pods_recommendation='0' then "Yes" else "No" End as pods_recommendation,
+       interface,
+       unified_ssid,
+       signalstrength,
+       devicename,
+       hardwareversion,
+       missing_data,
+       missing_data_device,
+       polling_date, 
+       ticket_count,
+       device_score,
+       case when ((float(intermittancy_perc)>0.6) and (float(ticket_count) > 0)) then float(intermittancy_perc)
+            when ((float(intermittancy_perc)>0.5) and (float(ticket_count) > 0) and (pods_recommendation='1')) then float(1 - float(intermittancy_perc))
+            when ((float(intermittancy_perc)<0.5) and (float(ticket_count) > 0) and (pods_recommendation='0')) then float(1 - float(intermittancy_perc)) 
+            when ((pods_recommendation='0') and (float(intermittancy_perc)<0.5)) then float(1 - float(intermittancy_perc)) 
+            when ((float(ticket_count) <= 0) and (float(intermittancy_perc) > 0.5)) then float(1 - float(intermittancy_perc))
+            when ((float(ticket_count) <= 0) and (float(intermittancy_perc) > 0.5) and (pods_recommendation='1')) then float(1 - float(intermittancy_perc))
+            else intermittancy_perc End as intermittancy_perc
+       from business_users_test.tmp_single_modem_recommendation_temp_scaled) AS A) AS AA
+       group by AA.gateway_macaddress, AA.pods_recommendation, AA.polling_date, AA.intermittancy_perc
+
+
+REFRESH TABLE business_users_test.tmp_single_modem_prediction_classifier;
+REFRESH TABLE business_users_test.tmp_single_modem_recommendation;
+REFRESH TABLE business_users_test.etl_icm_case;
+
+DROP TABLE IF EXISTS business_users_test.tmp_single_modem_intermittancy_to_cbc_analysis;
+CREATE TABLE business_users_test.tmp_single_modem_intermittancy_to_cbc_analysis
+select FINAL.CASE_FA,
+       FINAL.polling_date,
+       FINAL.intermittancy_perc,
+       FINAL.CASE_TYPE_LVL1,
+       FINAL.CASE_TYPE_LVL2,
+       FINAL.CASE_TYPE_LVL3,
+       FINAL.CASE_TYPE_LVL4,
+       FINAL.CASE_TYPE_LVL5,
+       FINAL.overnight_polls,
+       FINAL.daylight_polls,
+       FINAL.all_polls,
+       FINAL.gateway_macaddress,
+       FINAL.scaled_accessibility_perc_full_day,
+       FINAL.ticket_count,
+       nvl(FINAL.pods_recommendation,1) as pods_recommendation
+FROM
+(select distinct C.CASE_FA as CASE_FA,
+       C.polling_date as polling_date,
+       D.intermittancy_perc as intermittancy_perc,
+       C.CASE_TYPE_LVL1 as CASE_TYPE_LVL1,
+       C.CASE_TYPE_LVL2 as CASE_TYPE_LVL2,
+       C.CASE_TYPE_LVL3 as CASE_TYPE_LVL3,
+       C.CASE_TYPE_LVL4 as CASE_TYPE_LVL4,
+       C.CASE_TYPE_LVL5 as CASE_TYPE_LVL5,
+       D.overnight_polls as overnight_polls,
+       D.daylight_polls as daylight_polls,
+       D.all_polls as all_polls,
+       D.gateway_macaddress as gateway_macaddress,
+       D.scaled_accessibility_perc_full_day as scaled_accessibility_perc_full_day,
+       D.ticket_count as ticket_count,
+       CASE when ISNULL(D.pods_recommendation) OR 
+                 D.pods_recommendation IS NULL OR 
+                 D.pods_recommendation='' OR 
+                 D.pods_recommendation='null' OR 
+                 LENGTH(D.pods_recommendation)<0 THEN cast(1 as int) 
+                 ELSE cast(D.pods_recommendation as int) END as pods_recommendation
+from
+(select A.CASE_FA AS CASE_FA,
+       B.mac AS mac,
+       A.polling_date as polling_date,
+       A.CASE_TYPE_LVL1 as CASE_TYPE_LVL1,
+       A.CASE_TYPE_LVL2 as CASE_TYPE_LVL2,
+       A.CASE_TYPE_LVL3 as CASE_TYPE_LVL3,
+       A.CASE_TYPE_LVL4 as CASE_TYPE_LVL4,
+       A.CASE_TYPE_LVL5 as CASE_TYPE_LVL5
+From
+(select CASE_FA, 
+       CASE_TYPE_LVL1, 
+       CASE_TYPE_LVL2, 
+       CASE_TYPE_LVL3, 
+       CASE_TYPE_LVL4, 
+       CASE_TYPE_LVL5, 
+       from_unixtime(unix_timestamp(CASE_CREATED_DATE,'yyyy/MM/dd'),'yyyy-MM-dd') as polling_date
+from business_users_test.etl_icm_case
+where cast(CASE_CREATED_DATE as date) IN (select distinct cast(polling_date as date) as polling_date from business_users_test.tmp_single_modemss_v1 order by polling_date desc limit 7)) AS A
+JOIN
+(select mac, full_account_number, event_date
+ from pma.modem_accessibility_daily) AS B
+ON A.CASE_FA=B.full_account_number and
+   A.polling_date=B.event_date) AS C
+LEFT JOIN
+(
+select BB.gateway_macaddress as gateway_macaddress,
+       BB.intermittancy_perc as intermittancy_perc,
+       BB.scaled_accessibility_perc_full_day as scaled_accessibility_perc_full_day,
+       BB.ticket_count as ticket_count,
+       CASE when ISNULL(BB.pods_recommendation) OR 
+                 BB.pods_recommendation IS NULL OR 
+                 BB.pods_recommendation='' OR 
+                 BB.pods_recommendation='null' OR 
+                 LENGTH(BB.pods_recommendation)<0 THEN cast(1 as int) 
+                 ELSE cast(BB.pods_recommendation as int) END as pods_recommendation,
+       AA.overnight_polls as overnight_polls,
+       AA.daylight_polls as daylight_polls,
+       AA.all_polls as all_polls
+FROM
+(
+select gateway_macaddress,
+       overnight_polls,
+       daylight_polls,
+       all_polls
+from business_users_test.tmp_single_modem_recommendation
+) AS AA
+JOIN
+(
+select gateway_macaddress,
+        intermittancy_perc, 
+        scaled_accessibility_perc_full_day,
+        ticket_count,
+        pods_recommendation 
+from business_users_test.tmp_single_modem_prediction_classifier) AS BB
+ON AA.gateway_macaddress=BB.gateway_macaddress
+) AS D
+ON C.mac=D.gateway_macaddress
+where C.CASE_TYPE_LVL1 != "Tech - Rogers - IPTV") AS FINAL
+
+REFRESH TABLE business_users_test.tmp_single_modem_intermittancy_to_cbc_analysis; 
+DROP TABLE IF EXISTS business_users_test.tmp_single_modem_intermittancy_agg_level_two;
+CREATE TABLE business_users_test.tmp_single_modem_intermittancy_agg_level_two
+select sum(A.total_tickets) as total_tickets, 
+       A.CASE_TYPE_LVL1 as CASE_TYPE_LVL1, 
+       A.CASE_TYPE_LVL2 as CASE_TYPE_LVL2, 
+       A.pods_recommendation as pods_recommendation
+from
+(select count(distinct CASE_FA) as total_tickets, 
+        CASE_TYPE_LVL1, CASE_TYPE_LVL2 ,cast(pods_recommendation as int) from business_users_test.tmp_single_modem_intermittancy_to_cbc_analysis 
+group by CASE_TYPE_LVL1, CASE_TYPE_LVL2, pods_recommendation) AS A
+group by pods_recommendation,CASE_TYPE_LVL1,CASE_TYPE_LVL2
+
+REFRESH TABLE business_users_test.tmp_single_modem_intermittancy_to_cbc_analysis;
+DROP TABLE IF EXISTS business_users_test.tmp_single_modem_intermittancy_agg_by_lvl4_analysis;
+CREATE TABLE business_users_test.tmp_single_modem_intermittancy_agg_by_lvl4_analysis
+select count(distinct CASE_FA) as total_tickets, 
+        CASE_TYPE_LVL1, CASE_TYPE_LVL2 , CASE_TYPE_LVL3, CASE_TYPE_LVL4 ,cast(pods_recommendation as int) From
+(select * from business_users_test.tmp_single_modem_intermittancy_to_cbc_analysis
+where CASE_TYPE_LVL2="Internet" 
+AND
+CASE_TYPE_LVL3 IN ('RF Signal','Rogers Home Networking'))
+GROUP BY CASE_TYPE_LVL1, CASE_TYPE_LVL2 , CASE_TYPE_LVL3, CASE_TYPE_LVL4, pods_recommendation 

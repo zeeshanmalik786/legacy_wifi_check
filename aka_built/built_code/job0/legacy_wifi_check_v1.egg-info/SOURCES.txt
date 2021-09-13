@@ -1,0 +1,11 @@
+setup.py
+SparkEggfile/__init__.py
+SparkEggfile/config.py
+SparkEggfile/gw_process.py
+SparkEggfile/main_entry.py
+SparkEggfile/preprocess.py
+SparkEggfile/unify.py
+legacy_wifi_check_v1.egg-info/PKG-INFO
+legacy_wifi_check_v1.egg-info/SOURCES.txt
+legacy_wifi_check_v1.egg-info/dependency_links.txt
+legacy_wifi_check_v1.egg-info/top_level.txt

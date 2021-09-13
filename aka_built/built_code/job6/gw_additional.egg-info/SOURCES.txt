@@ -1,0 +1,10 @@
+setup.py
+additional/__init__.py
+additional/additional.py
+additional/config.py
+additional/gw_additional_entry.py
+additional/preprocess.py
+gw_additional.egg-info/PKG-INFO
+gw_additional.egg-info/SOURCES.txt
+gw_additional.egg-info/dependency_links.txt
+gw_additional.egg-info/top_level.txt

@@ -1,0 +1,10 @@
+setup.py
+gw_process_historical/__init__.py
+gw_process_historical/config.py
+gw_process_historical/gw_entry.py
+gw_process_historical/gw_process_historical.py
+gw_process_historical/preprocess.py
+gw_process_historical.egg-info/PKG-INFO
+gw_process_historical.egg-info/SOURCES.txt
+gw_process_historical.egg-info/dependency_links.txt
+gw_process_historical.egg-info/top_level.txt
