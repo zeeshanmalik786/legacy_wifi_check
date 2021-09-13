@@ -14,3 +14,12 @@ migration_evaluation.py
 notebooks/*
 preprocessor-0.1-py3.7.egg
 aka_built/built_code/.idea/
+aka_built/built_code/job0/preprocessing/
+aka_built/built_code/job1/preprocessing/
+aka_built/built_code/job2/preprocessing/
+aka_built/built_code/job3/preprocessing/
+aka_built/built_code/job4/preprocessing/
+aka_built/built_code/job5/preprocessing/
+aka_built/built_code/job6/preprocessing/
+aka_built/built_code/job7/preprocessing/
+aka_built/built_code/job8/preprocessing/
