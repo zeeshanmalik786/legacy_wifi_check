@@ -34,7 +34,7 @@ class gw_process:
             withColumn("in_fiveteen_date", func.date_sub(lit(run_date), self.fiveteen_span)). \
             withColumn("in_three_date", func.date_sub(lit(run_date), self.three_span)). \
             withColumn("interface", func.when(col("associated_device_band") == 1, "WiFi 2.4G").otherwise("WiFi 5G")). \
-            filter((col("polling_date") <= lit(run_date)) & (col("polling_date") >= func.date_sub(lit(run_date), 0)))
+            filter((col("polling_date") == func.date_sub(lit(run_date), 0)))
 
 
         # hardware_version and modem family
@@ -54,7 +54,7 @@ class gw_process:
                                                       "hostname"]). \
             withColumnRenamed("physaddress", "associated_device_macaddress"). \
             withColumnRenamed("hostname", "devicename"). \
-            filter((col("polling_date") <= lit(run_date)) & (col("polling_date") >= func.date_sub(lit(run_date), 0)))
+            filter((col("polling_date") == func.date_sub(lit(run_date), 0)))
 
 
 
@@ -119,16 +119,12 @@ class gw_process:
                                                         ["gateway_macaddress",
                                                          "associated_device_macaddress",
                                                          "polling_date"]). \
-            filter((col("polling_date") <= lit(run_date)) & (col("polling_date") >= func.date_sub(lit(run_date), 0)))
+            filter((col("polling_date") == func.date_sub(lit(run_date), 0)))
 
 
         connected_devices_hitron_host_hist = self.obj.get_data("lwc.tmp_single_modems_historical_run","*")
 
         connected_devices_hitron_host = self.obj.unionAll(*[connected_devices_hitron_host_single, connected_devices_hitron_host_hist])
-
-        # self.spark.sql("DROP TABLE IF EXISTS lwc.tmp_single_modems_one_day")
-        #
-        # connected_devices_hitron_host.write.saveAsTable("lwc.tmp_single_modems_one_day")
 
         # Check the number of polls in the last 15 days
         # 9
@@ -197,6 +193,7 @@ class gw_process:
                          "hh:mm:ss"),
             'hh:mm:ss'))
                                                  , "Overnight").otherwise("Daylight"))
+
         self.spark.sql("DROP TABLE IF EXISTS lwc.tmp_single_modem")
 
         # replacing null with unknown
@@ -204,10 +201,6 @@ class gw_process:
         connection_joined_fiveteen_three_new = connection_joined_fiveteen_three_new.na.fill("Unknown"). \
             withColumnRenamed("device_deviceinfo_hardwareversion", "hardwareversion")
 
-
-        self.spark.sql("DROP TABLE IF EXISTS lwc.tmp_single_modems_v1")
-
-        self.spark.sql("CREATE TABLE IF NOT EXISTS lwc.tmp_single_modems_v1(gateway_macaddress string,associated_device_macaddress string, interface string,polling_date string,polling_time string,polling_span string,signalstrength string,devicename string,model_family string,hardwareversion string,missing_data string,percent_first_threshold_GW double,percent_second_threshold_GW double)")
 
         connection_joined_fiveteen_three_new.select("gateway_macaddress",
                                                 "associated_device_macaddress",
@@ -223,8 +216,11 @@ class gw_process:
                                                 "percent_first_threshold_GW",
                                                 "percent_second_threshold_GW"
                                                 ).\
+            filter(col("polling_date")==func.date_sub(lit(run_date), 0)).\
             write.saveAsTable("lwc.tmp_single_modem")
 
-        self.spark.sql("INSERT INTO TABLE lwc.tmp_single_modems_v1 SELECT * from lwc.tmp_single_modem")
+
+
+        self.spark.sql("INSERT INTO TABLE lwc.tmp_single_modems_gw_v1 SELECT * from lwc.tmp_single_modem")
 
         return True

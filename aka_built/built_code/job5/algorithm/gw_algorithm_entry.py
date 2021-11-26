@@ -46,7 +46,7 @@ def main(run_date):
     print(time.perf_counter())
 
     job_9 = hybrid()
-    status = job_9.hybrid(run_date)
+    status = job_9.hybrid()
 
     if status is True:
         print("Job 5_4 Done")

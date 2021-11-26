@@ -81,7 +81,7 @@ class gw_ethernet:
                                                                    "percent_first_threshold_GW",
                                                                    "percent_second_threshold_GW"). \
             filter(col("polling_date") <= run_date)
-        connection_joined_fiveteen_three_new = self.obj.get_data("lwc.tmp_single_modems_gw_v1",
+        connection_joined_fiveteen_three_new = self.obj.get_data("lwc.tmp_single_modems_v1",
                                                         ["gateway_macaddress",
                                                          "associated_device_macaddress",
                                                          "interface",

@@ -24,17 +24,17 @@ class gw_process:
         # 1
 
         connected_devices = self.obj.get_data("pma.net_rog_wifi_associated_devices_fct", ["gateway_macaddress",
-                                                                                          "polling_date",
-                                                                                          "polling_time",
-                                                                                          "associated_device_macaddress",
-                                                                                          "associated_device_band",
-                                                                                          "signalstrength",
-                                                                                          "x_comcast_com_rssi"]). \
+                                                                                 "polling_date",
+                                                                                 "polling_time",
+                                                                                 "associated_device_macaddress",
+                                                                                 "associated_device_band",
+                                                                                 "signalstrength",
+                                                                                 "x_comcast_com_rssi"]). \
             withColumn("current_date", lit(run_date)). \
             withColumn("in_fiveteen_date", func.date_sub(lit(run_date), self.fiveteen_span)). \
             withColumn("in_three_date", func.date_sub(lit(run_date), self.three_span)). \
-            withColumn("interface", func.when(col("associated_device_band") == 1, "WiFi 2.4G").otherwise("WiFi 5G")).\
-            filter(col("polling_date")==lit(run_date))
+            withColumn("interface", func.when(col("associated_device_band") == 1, "WiFi 2.4G").otherwise("WiFi 5G")). \
+            filter((col("polling_date") <= lit(run_date)) & (col("polling_date") >= func.date_sub(lit(run_date), 30)))
 
         # hardware_version and modem family
         # 2
@@ -52,8 +52,8 @@ class gw_process:
                                                                "polling_date",
                                                                "hostname"]). \
         withColumnRenamed("physaddress", "associated_device_macaddress"). \
-        withColumnRenamed("hostname", "devicename").\
-            filter(col("polling_date") == lit(run_date))
+        withColumnRenamed("hostname", "devicename"). \
+            filter((col("polling_date") <= lit(run_date)) & (col("polling_date") >= func.date_sub(lit(run_date), 30)))
 
         # 4
         host_name_not_unknown = host.filter((col("devicename") != 'Unknown') & (col("devicename").isNotNull())
@@ -113,8 +113,8 @@ class gw_process:
                                                         "left",
                                                         ["gateway_macaddress",
                                                          "associated_device_macaddress",
-                                                         "polling_date"]).\
-            filter(col("polling_date")== lit(run_date))
+                                                         "polling_date"]). \
+            filter((col("polling_date") <= lit(run_date)) & (col("polling_date") >= func.date_sub(lit(run_date), 30)))
 
         # Check the number of polls in the last 15 days
         # 9
