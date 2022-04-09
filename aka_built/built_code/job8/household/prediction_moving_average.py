@@ -12,6 +12,7 @@ class prediction_moving_average:
         self.spark = self.con.spark
 
     def moving_average(self, run_date):
+
         self.spark.sql("REFRESH TABLE lwc.tmp_single_modem_training_pivot")
         data = self.obj.get_data("lwc.tmp_single_modem_training_pivot", ["gateway_macaddress",
                                                                                 "polling_date",

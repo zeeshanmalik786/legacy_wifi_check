@@ -23,3 +23,12 @@ aka_built/built_code/job5/algorithm/preprocess.py
 aka_built/built_code/job6/additional/preprocess.py
 aka_built/built_code/job7/recommendation/preprocess.py
 aka_built/built_code/job8/household/preprocess.py
+aka_built/built_code/job0/gw_process_historical/config.py
+aka_built/built_code/job1/gw_process/config.py
+aka_built/built_code/job2/gw_ethernet/config.py
+aka_built/built_code/job3/unified_ssid/config.py
+aka_built/built_code/job4/device_processing/config.py
+aka_built/built_code/job5/algorithm/config.py
+aka_built/built_code/job6/additional/config.py
+aka_built/built_code/job7/recommendation/config.py
+aka_built/built_code/job8/household/config.py

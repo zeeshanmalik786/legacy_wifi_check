@@ -19,7 +19,7 @@ class gw_process:
         self.first_threshold = 0.1
         self.second_threshold = 0.6
 
-    def legacy_wifi_check_gw_aggregations(self, run_date):
+    def legacy_wifi_check_gw_aggregations(self, run_date, unite):
 
         # 1
 
@@ -113,7 +113,7 @@ class gw_process:
 
         # joining device info with connected device data
 
-        connected_devices_hitron_host_single = self.obj.join_two_frames(connected_devices_hitron,
+        connected_devices_hitron_host = self.obj.join_two_frames(connected_devices_hitron,
                                                         host_name,
                                                         "left",
                                                         ["gateway_macaddress",
@@ -121,10 +121,13 @@ class gw_process:
                                                          "polling_date"]). \
             filter((col("polling_date") == func.date_sub(lit(run_date), 0)))
 
+        if unite == 0:
 
-        connected_devices_hitron_host_hist = self.obj.get_data("lwc.tmp_single_modems_historical_run","*")
+            connected_devices_hitron_host_hist = self.obj.get_data("lwc.tmp_single_modems_historical_run","*")
+            connected_devices_hitron_host = self.obj.unionAll(*[connected_devices_hitron_host, connected_devices_hitron_host_hist])
+        else:
 
-        connected_devices_hitron_host = self.obj.unionAll(*[connected_devices_hitron_host_single, connected_devices_hitron_host_hist])
+            unite+=1
 
         # Check the number of polls in the last 15 days
         # 9
@@ -216,9 +219,7 @@ class gw_process:
                                                 "percent_first_threshold_GW",
                                                 "percent_second_threshold_GW"
                                                 ).\
-            filter(col("polling_date")==func.date_sub(lit(run_date), 0)).\
             write.saveAsTable("lwc.tmp_single_modem")
-
 
 
         self.spark.sql("INSERT INTO TABLE lwc.tmp_single_modems_gw_v1 SELECT * from lwc.tmp_single_modem")

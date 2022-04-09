@@ -126,4 +126,5 @@ class gw_processing:
 
         connected_devices_hitron_host.write.saveAsTable("lwc.tmp_single_modems_historical_run")
 
+
         return True
